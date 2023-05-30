@@ -64,14 +64,18 @@ public class TabelaRoteamento {
         /* Atualize a tabela de rotamento a partir da string recebida. */
         // padrão de recebimento: *192.168.1.2;1*192.168.1.3;1
 
+       String aux = tabela_s.substring(1);
+
         // separa a string em linhas
-        String[] listaStrings = tabela_s.split("\\*");
+        String[] listaStrings = aux.split("//*");
+        //192.168.1.2;1 192.168.1.3;1
         // para cada linha
         for (int i = 0; i < listaStrings.length; i++) {
             // pega Ip e métrica
             String[] ip_metrica = listaStrings[i].split(";");
 
             // separa o ip e a métrica
+            System.out.println("IP: " + ip_metrica[0] );
             String ip = ip_metrica[0];
             String metrica = ip_metrica[1];
 
@@ -81,15 +85,16 @@ public class TabelaRoteamento {
                 if (tableRow.get("destino").equals(ip)) {
                     break;
                 }
+                else {
+                    // se o ip não existe na tabela, adiciona
+                    tableRow.put("destino", ip);
+                    tableRow.put("metrica", metrica);
+                    tableRow.put("saida", IPAddress.getHostAddress());
+                    // adiciona na tabela de roteamento
+                    this.table.add(tableRow);
+                }
             }
-
-            // se o ip não existe na tabela, adiciona
-            Map<String, String> tableRow = new HashMap<String, String>();
-            tableRow.put("destino", ip);
-            tableRow.put("metrica", metrica);
-            tableRow.put("saida", IPAddress.getHostAddress());
-            // adiciona na tabela de roteamento
-            this.table.add(tableRow);
+            
         }
 
         // System.out.println( IPAddress.getHostAddress() + ": " + tabela_s);
