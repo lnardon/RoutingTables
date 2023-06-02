@@ -2,22 +2,24 @@ package roteador;
 
 import java.net.InetAddress;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 
 public class TabelaRoteamento {
+
     /*
-     * Implemente uma estrutura de dados para manter a tabela de roteamento.
-     * A tabela deve possuir: IP Destino, Métrica e IP de Saída.
+     * Implemente uma estrutura de dados para manter a tabela de roteamento. A tabela deve possuir: IP Destino, Métrica e IP de Saída.
      */
-    public LinkedList table = new LinkedList();
+    public LinkedList<Map<String, String>> table;
 
     public TabelaRoteamento() {
         /* Cria tabela de roteamento vazia. */
+        this.table = new LinkedList<>();
     }
 
     public TabelaRoteamento(String ipDestino, String metrica, String ipSaida) {
-        Map<String, String> tableRow = new HashMap<String, String>();
+        Map<String, String> tableRow = new HashMap<>();
         tableRow.put("destino", ipDestino);
         tableRow.put("metrica", metrica);
         tableRow.put("saida", ipSaida);
@@ -35,79 +37,95 @@ public class TabelaRoteamento {
         String ipSaida = "Direta";
 
         // verifica se o ip já existe na tabela
-        for (int j = 0; j < this.table.size(); j++) {
-            Map<String, String> tableRow = (Map<String, String>) this.table.get(j);
+        boolean ipExistente = false;
+        for (Map<String, String> tableRow : this.table) {
             if (tableRow.get("destino").equals(ip)) {
+                ipExistente = true;
                 break;
             }
         }
 
         // se o ip não existe na tabela, adiciona
-        Map<String, String> tableRow = new HashMap<String, String>();
-        tableRow.put("destino", ipDestino);
-        tableRow.put("metrica", metrica);
-        tableRow.put("saida", ipSaida);
-        // adiciona na tabela de roteamento
-        this.table.add(tableRow);
+        if (!ipExistente) {
+            Map<String, String> tableRow = new HashMap<>();
+            tableRow.put("destino", ipDestino);
+            tableRow.put("metrica", metrica);
+            tableRow.put("saida", ipSaida);
+            // adiciona na tabela de roteamento
+            this.table.add(tableRow);
+        }
 
         // Imprime a tabela de roteamento
         System.out.println("Tabela de roteamento inicializada");
-        for (int i = 0; i < this.table.size(); i++) {
-            Map<String, String> tableRow2 = (Map<String, String>) this.table.get(i);
-            System.out
-                    .println(tableRow2.get("destino") + " " + tableRow2.get("metrica") + " " + tableRow2.get("saida"));
+        for (Map<String, String> tableRow : this.table) {
+            System.out.println(tableRow.get("destino") + " " + tableRow.get("metrica") + " " + tableRow.get("saida"));
         }
-
     }
 
-    public void update_tabela(String tabela_s, InetAddress IPAddress) {
-        /* Atualize a tabela de rotamento a partir da string recebida. */
-        // padrão de recebimento: *192.168.1.2;1*192.168.1.3;1
-
-       String aux = tabela_s.substring(1);
+    public void update_tabela(String tabela_s, InetAddress endereco_roteador) {
+        String aux = tabela_s.substring(1);
 
         // separa a string em linhas
-        String[] listaStrings = aux.split("//*");
-        //192.168.1.2;1 192.168.1.3;1
-        // para cada linha
-        for (int i = 0; i < listaStrings.length; i++) {
-            // pega Ip e métrica
-            String[] ip_metrica = listaStrings[i].split(";");
+        String[] listaStrings = aux.split("\\*");
 
-            // separa o ip e a métrica
-            System.out.println("IP: " + ip_metrica[0] );
+        for (String listaString : listaStrings) {
+            // pega IP e métrica
+            String[] ip_metrica = listaString.split(";");
+
             String ip = ip_metrica[0];
             String metrica = ip_metrica[1];
 
-            // verifica se o ip já existe na tabela
-            for (int j = 0; j < this.table.size(); j++) {
-                Map<String, String> tableRow = (Map<String, String>) this.table.get(j);
+            // verifica se o IP de Destino já existe na tabela
+            boolean ipExistente = false;
+            for (Map<String, String> tableRow : this.table) {
                 if (tableRow.get("destino").equals(ip)) {
+                    ipExistente = true;
+                    int metricaAtual = Integer.parseInt(tableRow.get("metrica"));
+                    int novaMetrica = Integer.parseInt(metrica.trim());
+
+                    // Verifica se a Métrica recebida é menor do que a Métrica atual
+                    if (novaMetrica < metricaAtual) {
+                        tableRow.put("metrica", metrica);
+                        tableRow.put("saida", endereco_roteador.getHostAddress());
+                    }
                     break;
                 }
-                else {
-                    // se o ip não existe na tabela, adiciona
-                    tableRow.put("destino", ip);
-                    tableRow.put("metrica", metrica);
-                    tableRow.put("saida", IPAddress.getHostAddress());
-                    // adiciona na tabela de roteamento
-                    this.table.add(tableRow);
-                }
             }
-            
+
+            // Se o IP de Destino não existe na tabela, adiciona
+            if (!ipExistente) {
+                Map<String, String> tableRow = new HashMap<>();
+                tableRow.put("destino", ip);
+                tableRow.put("metrica", String.valueOf(Integer.parseInt(metrica) + 1));
+                tableRow.put("saida", endereco_roteador.getHostAddress());
+                this.table.add(tableRow);
+            }
         }
 
-        // System.out.println( IPAddress.getHostAddress() + ": " + tabela_s);
+        // Remove as rotas que não estão mais sendo divulgadas
+        Iterator<Map<String, String>> iterator = this.table.iterator();
+        while (iterator.hasNext()) {
+            Map<String, String> tableRow = iterator.next();
+            String ipDestino = tableRow.get("destino");
+            boolean ipEncontrado = false;
+            for (String linha : listaStrings) {
+                String[] ipMetrica = linha.split(";");
+                String ip = ipMetrica[0];
+                if (ipDestino.equals(ip)) {
+                    ipEncontrado = true;
+                    break;
+                }
+            }
+            if (!ipEncontrado) {
+                iterator.remove();
+            }
+        }
 
         // Imprime a tabela de roteamento
-        System.out.println("Tabela de roteamento: ");
-        for (int i = 0; i < this.table.size(); i++) {
-            // padrão de retorno: *
-            Map<String, String> tableRow = (Map<String, String>) this.table.get(i);
-            // concatena IP de Destino e Métrica
+        System.out.println("Tabela de roteamento:");
+        for (Map<String, String> tableRow : this.table) {
             System.out.println("IP Destino: " + tableRow.get("destino") + " | Métrica: " + tableRow.get("metrica")
                     + " | IP Saída: " + tableRow.get("saida"));
-
         }
     }
 
@@ -117,10 +135,8 @@ public class TabelaRoteamento {
             return "Tabela de roteamento vazia!";
         }
 
-        for (int i = 0; i < this.table.size(); i++) {
+        for (Map<String, String> tableRow : this.table) {
             // padrão de retorno: *192.168.1.2;1*192.168.1.3;1
-            Map<String, String> tableRow = (Map<String, String>) this.table.get(i);
-            // concatena IP de Destino e Métrica
             tabela_string += "*" + tableRow.get("destino") + ";" + tableRow.get("metrica");
         }
         System.out.println("Tabela de roteamento: " + tabela_string);
@@ -128,4 +144,22 @@ public class TabelaRoteamento {
         return tabela_string;
     }
 
+    public void remover_rotas_vizinho(String ipVizinho) {
+        Iterator<Map<String, String>> iterator = table.iterator();
+        while (iterator.hasNext()) {
+            Map<String, String> tableRow = iterator.next();
+            String ipSaida = tableRow.get("saida");
+            if (ipSaida.equals(ipVizinho)) {
+                iterator.remove();
+            }
+        }
+    }
+
+    public void imprimir_tabela() {
+        System.out.println("Tabela de roteamento:");
+        for (Map<String, String> tableRow : this.table) {
+            System.out.println("IP Destino: " + tableRow.get("destino") + " | Métrica: " + tableRow.get("metrica")
+                    + " | IP Saída: " + tableRow.get("saida"));
+        }
+    }
 }

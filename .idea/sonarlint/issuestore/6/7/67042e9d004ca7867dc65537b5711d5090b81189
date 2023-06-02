@@ -1,0 +1,33 @@
+
+e
+java:S1192"HDefine a constant instead of duplicating this literal "metrica" 9 times.(äª‘8†Ãú–‡1
+c
+java:S1192"FDefine a constant instead of duplicating this literal "saida" 8 times.(÷›€8†Ãú–‡1
+k
+java:S1192"IDefine a constant instead of duplicating this literal "destino" 10 times.(ðä×Öùÿÿÿÿ8†Ãú–‡1
+ƒ
+java:S1319"fThe type of "table" should be an interface such as "List" rather than the implementation "LinkedList".(–õÙ”8†Ãú–‡1
+m	java:S117A"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(òÏ–8‡Ãú–‡1
+m	java:S117A"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(òÏ–8‡Ãú–‡1
+m	java:S117I"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ïåøë8‡Ãú–‡1
+s	java:S117…"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›åþÿÿÿÿ8‡Ãú–‡1
+?
+java:S1643Œ"Use a StringBuilder instead.(èôßßùÿÿÿÿ8‡Ãú–‡1
+n
+java:S1104"QMake table a static final constant or non-public and provide accessors if needed.(–õÙ”8‡Ãú–‡1
+o	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÑæÊ¼úÿÿÿÿ8‰Äú–‡1
+U	java:S106;"9Replace this use of System.out or System.err by a logger.(Žöìï8ŠÄú–‡1
+U	java:S106="9Replace this use of System.out or System.err by a logger.(…­Œ˜8‹Äú–‡1
+j	java:S100A"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(òÏ–8‹Äú–‡1
+o
+java:S3776A"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(òÏ–8‹Äú–‡1
+U	java:S106}"9Replace this use of System.out or System.err by a logger.(¾—ÓÕ8Äú–‡1
+Z	java:S106"9Replace this use of System.out or System.err by a logger.(êš®•ÿÿÿÿÿ8Äú–‡1
+p	java:S100„"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ú´‡Ìÿÿÿÿÿ8Äú–‡1
+[
+java:S1155†">Use isEmpty() to check whether the collection is empty or not.(ÕËæ8‘Äú–‡1
+V	java:S106Ž"9Replace this use of System.out or System.err by a logger.(ª•ÛÞ8‘Äú–‡1
+p	java:S100“"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÁÝÙ¥úÿÿÿÿ8’Äú–‡1
+p	java:S100ž"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜˜ÞÉùÿÿÿÿ8“Äú–‡1
+V	java:S106Ÿ"9Replace this use of System.out or System.err by a logger.(¾—ÓÕ8“Äú–‡1
+[	java:S106¡"9Replace this use of System.out or System.err by a logger.(êš®•ÿÿÿÿÿ8“Äú–‡1

@@ -1,0 +1,10 @@
+
+ƒ
+java:S1319"aThe type of "v" should be an interface such as "List" rather than the implementation "ArrayList".(Ë¶â¥ùÿÿÿÿ8ÒÉî—‡1
+m	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(µŞÕø8ÓÉî—‡1
+r	java:S117,"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¤Ê”òøÿÿÿÿ8ÓÉî—‡1
+Z	java:S106 "9Replace this use of System.out or System.err by a logger.(šÌ«Ëıÿÿÿÿ8ğÉî—‡1
+Z	java:S106&"9Replace this use of System.out or System.err by a logger.(Õº°øÿÿÿÿ8ğÉî—‡1
+U	java:S106E"9Replace this use of System.out or System.err by a logger.(µëÊÔ8òÉî—‡1
+€
+java:S2142Q"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(è®ã¶øÿÿÿÿ8òÉî—‡1

@@ -11,8 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MessageSender implements Runnable {
-    TabelaRoteamento tabela; /* Tabela de roteamento */
-    ArrayList<String> vizinhos; /* Lista de IPs dos roteadores vizinhos */
+    private TabelaRoteamento tabela; /* Tabela de roteamento */
+    private ArrayList<String> vizinhos; /* Lista de IPs dos roteadores vizinhos */
 
     public MessageSender(TabelaRoteamento t, ArrayList<String> v) {
         tabela = t;
@@ -28,7 +28,6 @@ public class MessageSender implements Runnable {
         /* Cria socket para envio de mensagem */
         try {
             clientSocket = new DatagramSocket();
-
         } catch (SocketException ex) {
             System.out.println("Erro ao criar socket para envio de mensagens - Sender.");
             Logger.getLogger(MessageSender.class.getName()).log(Level.SEVERE, null, ex);
@@ -58,7 +57,7 @@ public class MessageSender implements Runnable {
                 }
 
                 /*
-                 * Configura pacote para envio da menssagem para o roteador vizinho na porta
+                 * Configura pacote para envio da mensagem para o roteador vizinho na porta
                  * 5000
                  */
                 DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 5000);
@@ -67,15 +66,15 @@ public class MessageSender implements Runnable {
                 try {
                     clientSocket.send(sendPacket);
                 } catch (IOException ex) {
-                    System.out.println("clientSocket do sender: "+ sendPacket +"IPAddress:" + IPAddress + "sendData: "+ sendData);
+                    System.out.println("Erro ao enviar mensagem: " + ex.getMessage());
                     Logger.getLogger(MessageSender.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
             /*
              * Espera 10 segundos antes de realizar o próximo envio. CONTUDO, caso
-             * a tabela de roteamento sofra uma alteração, ela deve ser reenvida aos
-             * vizinho imediatamente.
+             * a tabela de roteamento sofra uma alteração, ela deve ser reenviada aos
+             * vizinhos imediatamente.
              */
             try {
                 Thread.sleep(10000);
@@ -84,7 +83,5 @@ public class MessageSender implements Runnable {
             }
 
         }
-
     }
-
 }
