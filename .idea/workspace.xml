@@ -5,11 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba45ba8b-132e-47ed-b62b-012409b38056" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/roteador/MessageReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/roteador/MessageReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/roteador/MessageSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/roteador/MessageSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/roteador/TabelaRoteamento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/roteador/TabelaRoteamento.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/e/3ea65206a3b9d3be085364d9d7de54d071c68b25" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/7/67042e9d004ca7867dc65537b5711d5090b81189" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/1/d1d76847980e4fd1c56a58a92bf2dc14d08cf596" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/b/ebca6ea616883df9cd3b54744164a36698d30785" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/3/e/3ea65206a3b9d3be085364d9d7de54d071c68b25" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/6/7/67042e9d004ca7867dc65537b5711d5090b81189" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/d/1/d1d76847980e4fd1c56a58a92bf2dc14d08cf596" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/e/b/ebca6ea616883df9cd3b54744164a36698d30785" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +45,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -72,6 +78,7 @@
       <option name="presentableId" value="Default" />
       <updated>1685552591134</updated>
       <workItem from="1685552592188" duration="5040000" />
+      <workItem from="1685712115369" duration="527000" />
     </task>
     <servers />
   </component>
