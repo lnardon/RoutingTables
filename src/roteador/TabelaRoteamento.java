@@ -1,6 +1,7 @@
 package roteador;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -34,7 +35,7 @@ public class TabelaRoteamento {
 
         String ipDestino = ip;
         String metrica = "1";
-        String ipSaida = "Direta";
+        String ipSaida = "127.0.0.1";
 
         // verifica se o ip já existe na tabela
         boolean ipExistente = false;
@@ -85,7 +86,7 @@ public class TabelaRoteamento {
 
                     // Verifica se a Métrica recebida é menor do que a Métrica atual
                     if (novaMetrica < metricaAtual) {
-                        tableRow.put("metrica", metrica);
+                        tableRow.put("metrica", String.valueOf(novaMetrica));
                         tableRow.put("saida", endereco_roteador.getHostAddress());
                     }
                     break;
@@ -96,7 +97,7 @@ public class TabelaRoteamento {
             if (!ipExistente) {
                 Map<String, String> tableRow = new HashMap<>();
                 tableRow.put("destino", ip);
-                tableRow.put("metrica", String.valueOf(Integer.parseInt(metrica) + 1));
+                tableRow.put("metrica", String.valueOf(Integer.parseInt(metrica.trim()) + 1));
                 tableRow.put("saida", endereco_roteador.getHostAddress());
                 this.table.add(tableRow);
             }
@@ -107,17 +108,13 @@ public class TabelaRoteamento {
         while (iterator.hasNext()) {
             Map<String, String> tableRow = iterator.next();
             String ipDestino = tableRow.get("destino");
-            boolean ipEncontrado = false;
             for (String linha : listaStrings) {
                 String[] ipMetrica = linha.split(";");
                 String ip = ipMetrica[0];
                 if (ipDestino.equals(ip)) {
-                    ipEncontrado = true;
+                    this.table.remove(ip);
                     break;
                 }
-            }
-            if (!ipEncontrado) {
-                iterator.remove();
             }
         }
 
@@ -144,13 +141,14 @@ public class TabelaRoteamento {
         return tabela_string;
     }
 
-    public void remover_rotas_vizinho(String ipVizinho) {
+    public void remover_rotas_vizinho(String ipVizinho) throws UnknownHostException {
         Iterator<Map<String, String>> iterator = table.iterator();
         while (iterator.hasNext()) {
             Map<String, String> tableRow = iterator.next();
             String ipSaida = tableRow.get("saida");
             if (ipSaida.equals(ipVizinho)) {
-                iterator.remove();
+                this.table.remove(ipVizinho);
+                this.update_tabela(this.get_tabela_string(), InetAddress.getByName(ipVizinho));
             }
         }
     }
@@ -163,3 +161,4 @@ public class TabelaRoteamento {
         }
     }
 }
+

@@ -5,17 +5,30 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MessageReceiver implements Runnable {
     private TabelaRoteamento tabela;
+    private Map<String,String> routerComms;
     private long lastReceivedTime;
-    private long inactivityTimeout = 30000; // Tempo limite de inatividade em milissegundos (30 segundos)
 
     public MessageReceiver(TabelaRoteamento t) {
         tabela = t;
         lastReceivedTime = System.currentTimeMillis();
+        routerComms = new HashMap<>();
     }
 
     @Override
@@ -54,12 +67,14 @@ public class MessageReceiver implements Runnable {
                 System.out.println("Tabela de roteamento recebida de " + IPAddress.toString());
                 System.out.println(tabela_string);
 
-                tabela.update_tabela(tabela_string, IPAddress);
+                this.routerComms.put(IPAddress.toString(), String.valueOf(lastReceivedTime) );
+
+                this.tabela.update_tabela(tabela_string, IPAddress);
 
                 // Verifica se o roteador vizinho está inativo há mais de 30 segundos
-                if (System.currentTimeMillis() - lastReceivedTime > inactivityTimeout) {
+                if (Long.parseLong(this.routerComms.get(IPAddress.toString()))+30000 < System.currentTimeMillis()) {
                     String ipVizinho = IPAddress.getHostAddress();
-                    tabela.remover_rotas_vizinho(ipVizinho);
+                    this.tabela.remover_rotas_vizinho(ipVizinho);
                     System.out.println("Roteador vizinho " + ipVizinho + " está inativo. Rotas removidas.");
                 }
             } catch (IOException ex) {
