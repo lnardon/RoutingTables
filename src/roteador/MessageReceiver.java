@@ -10,16 +10,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class MessageReceiver implements Runnable {
     private TabelaRoteamento tabela;
     private Map<String,String> routerComms;
@@ -47,8 +37,6 @@ public class MessageReceiver implements Runnable {
         byte[] receiveData = new byte[1024];
 
         while (true) {
-            System.out.println("Chegou no while do receiver");
-
             /* Cria um DatagramPacket */
             DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 

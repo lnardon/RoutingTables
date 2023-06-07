@@ -1,9 +1,7 @@
 package roteador;
 
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -13,6 +11,7 @@ public class TabelaRoteamento {
      * Implemente uma estrutura de dados para manter a tabela de roteamento. A tabela deve possuir: IP Destino, Métrica e IP de Saída.
      */
     public LinkedList<Map<String, String>> table;
+    public String myIp = "192.168.0.106";
 
     public TabelaRoteamento() {
         /* Cria tabela de roteamento vazia. */
@@ -32,11 +31,9 @@ public class TabelaRoteamento {
     public void add_vizinho(String ip) {
         /* Atualize a tabela de rotamento a partir da string recebida. */
         // padrão de recebimento: 192.168.1.2
-        InetAddress localIP = InetAddress.getLocalHost();
-
         String ipDestino = ip;
         String metrica = "1";
-        String ipSaida = localIP.getHostAddress();
+        String ipSaida = this.myIp;
 
         // verifica se o ip já existe na tabela
         boolean ipExistente = false;
@@ -62,10 +59,9 @@ public class TabelaRoteamento {
         for (Map<String, String> tableRow : this.table) {
             System.out.println(tableRow.get("destino") + " " + tableRow.get("metrica") + " " + tableRow.get("saida"));
         }
-    }
+    } 
 
     public void update_tabela(String tabela_s, InetAddress endereco_roteador) {
-        InetAddress localIP = InetAddress.getLocalHost();
         String aux = tabela_s.substring(1);
 
         // separa a string em linhas
@@ -78,7 +74,7 @@ public class TabelaRoteamento {
             String ip = ip_metrica[0];
             String metrica = ip_metrica[1];
 
-            if(!ip.equals(localIP.getHostAddress())){
+            if(!ip.equals(this.myIp)){
                 // verifica se o IP de Destino já existe na tabela
                 boolean ipExistente = false;
                 for (Map<String, String> tableRow : this.table) {
@@ -118,7 +114,7 @@ public class TabelaRoteamento {
     public String get_tabela_string() {
         String tabela_string = ""; /* Tabela de roteamento vazia conforme especificado no protocolo */
         if (this.table.size() <= 0) {
-            return "Tabela de roteamento vazia!";
+            return "!";
         }
 
         for (Map<String, String> tableRow : this.table) {
