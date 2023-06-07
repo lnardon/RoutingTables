@@ -73,7 +73,7 @@ public class MessageReceiver implements Runnable {
 
                 // Verifica se o roteador vizinho está inativo há mais de 30 segundos
                 if (Long.parseLong(this.routerComms.get(IPAddress.toString()))+30000 < System.currentTimeMillis()) {
-                    String ipVizinho = IPAddress.getHostAddress();
+                    String ipVizinho = IPAddress.toString();
                     this.tabela.remover_rotas_vizinho(ipVizinho);
                     System.out.println("Roteador vizinho " + ipVizinho + " está inativo. Rotas removidas.");
                 }
