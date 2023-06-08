@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 public class MessageSender implements Runnable {
     TabelaRoteamento tabela; /* Tabela de roteamento */
     ArrayList<String> vizinhos; /* Lista de IPs dos roteadores vizinhos */
@@ -42,7 +43,7 @@ public class MessageSender implements Runnable {
              * Pega a tabela de roteamento no formato string, conforme especificado pelo
              * protocolo.
              */
-            String tabela_string = tabela.get_tabela_string();
+            String tabela_string = this.tabela.get_tabela_string();
 
             /* Converte string para array de bytes para envio pelo socket. */
             sendData = tabela_string.getBytes();
@@ -86,5 +87,4 @@ public class MessageSender implements Runnable {
         }
 
     }
-
 }
